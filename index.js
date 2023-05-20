@@ -134,21 +134,21 @@ function DrawUI(data) {
 	DrawTextBlock("IGT", data.Timer.IGTFormattedString, ["white", "green2"], false);
 
 	// GETS COLOR FOR HP BAR ACCORDING TO PLAYERS HEALTH STATE
-	let _colors = GetColor(data.PlayerManager);
+	let _colors = GetColor(data.PlayerContext);
 	// DRAWS PLAYER HP IF MAX HP IS GREATER THAN OR EQUAL TO 1200
-	if (data.PlayerManager.Health.MaxHP >= 1200) {
-		DrawProgressBar(data.PlayerManager.Health.CurrentHP, data.PlayerManager.Health.MaxHP, data.PlayerManager.Health.Percentage, data.PlayerManager.CurrentSurvivorString, _colors);
+	if (data.PlayerContext.Health.MaxHP >= 1200) {
+		DrawProgressBar(data.PlayerContext.Health.CurrentHP, data.PlayerContext.Health.MaxHP, data.PlayerContext.Health.Percentage, data.PlayerContext.SurvivorTypeString, _colors);
 	}
 	// DRAWS DA RANK AND SCORE
-	DrawTextBlocks(["Rank", "RankScore"], [data.RankManager.GameRank, data.RankManager.RankPoint], ["white", "green2"], false);
+	DrawTextBlocks(["Rank", "ActionPoint", "ItemPoint"], [data.Rank.Rank, data.Rank.ActionPoint, data.Rank.ItemPoint], ["white", "green2"], false);
 
 	// FILTERS ENEMIES FOR ENEMIES THAT ARE ALIVE
-	var filterdEnemies = data.Enemies.filter(m => { return (m.IsAlive) });
+	var filterdEnemies = data.Enemies.filter(m => { return (m.Health.IsAlive && !m.IsAnimal && !m.IsIgnored) });
 
 	// DRAWS ALL ENEMIES TO SCREEN
 	filterdEnemies.sort(function (a, b) {
-		return Asc(a.CurrentHP, b.CurrentHP) || Desc(a.CurrentHP, b.CurrentHP);
+		return Asc(a.Health.CurrentHP, b.Health.CurrentHP) || Desc(a.Health.CurrentHP, b.Health.CurrentHP);
 	}).forEach(function (item, index, arr) {
-		DrawProgressBar(item.CurrentHP, item.MaxHP, item.Percentage, "", ["danger", "red"]);
+		DrawProgressBar(item.Health.CurrentHP, item.Health.MaxHP, item.Health.Percentage, item.SurvivorTypeString, ["danger", "red"]);
 	});
 }
