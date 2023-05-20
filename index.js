@@ -131,7 +131,7 @@ function appendData(data) {
 // REMAKE
 function DrawUI(data) {
 	// DRAWS IN GAME TIMER
-	DrawTextBlock("IGT", data.Timer.IGTFormattedString, ["white", "green2"], false);
+	// DrawTextBlock("IGT", data.Timer.IGTFormattedString, ["white", "green2"], false);
 
 	// GETS COLOR FOR HP BAR ACCORDING TO PLAYERS HEALTH STATE
 	let _colors = GetColor(data.PlayerContext);
@@ -140,7 +140,7 @@ function DrawUI(data) {
 		DrawProgressBar(data.PlayerContext.Health.CurrentHP, data.PlayerContext.Health.MaxHP, data.PlayerContext.Health.Percentage, data.PlayerContext.SurvivorTypeString, _colors);
 	}
 	// DRAWS DA RANK AND SCORE
-	DrawTextBlocks(["Rank", "ActionPoint", "ItemPoint"], [data.Rank.Rank, data.Rank.ActionPoint, data.Rank.ItemPoint], ["white", "green2"], false);
+	DrawTextBlocks(["Rank", "ActionPoint", "ItemPoint", "Kills"], [data.Rank.Rank, data.Rank.ActionPoint, data.Rank.ItemPoint, data.GameStatsKillCountElement.Count], ["white", "green2"], false);
 
 	// FILTERS ENEMIES FOR ENEMIES THAT ARE ALIVE
 	var filterdEnemies = data.Enemies.filter(m => { return (m.Health.IsAlive && !m.IsAnimal && !m.IsIgnored) });
